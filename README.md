@@ -13,7 +13,11 @@ have you got a Merchant (Payment processing ) certificate from apple? (you may n
 Merchant (session) certificate from apple (using your own csr & private key)
 
  
-Once you have your Merchant ID (session) certificate from apple, import that into the keychain Access.app on your mac, export the combined private-key and cert as a .p12 file, something like ApplePayMerchantIdentity_and_privatekey.p12 then, in terminal:-
+Once you have your Merchant ID (session) certificate from apple, import that into the keychain Access.app on your mac, export the combined private-key and cert as a .p12 file, something like ApplePayMerchantIdentity_and_privatekey.p12 then, in terminal...
  
 openssl pkcs12 -in ApplePayMerchantIdentity_and_privatekey.p12 -out ApplePay.crt.pem -clcerts -nokeys  
 openssl pkcs12 -in ApplePayMerchantIdentity_and_privatekey.p12 -out ApplePay.key.pem -nocerts -nodes 
+
+...to create two .pem files. These are the files your webserver will use to authenticate its conversations with Apple, requesting a session etc for each ApplePay transaction your customers make. 
+
+If at all possible, keep these two .pem files outside your root/public web folder. e.g. if your root web folder is /var/www/html/ then store these in /var/www/applepay_includes and include(); them in your php script.
