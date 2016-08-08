@@ -18,7 +18,7 @@ require_once ('/your/path/to/applepay_includes/apple_pay_conf.php');
 	background-image: -webkit-named-image(apple-pay-logo-white); 
 	background-position: 50% 50%;
 	background-color: black;
-	background-size: 90%; 
+	background-size: 60%; 
 	background-repeat: no-repeat;  
 }
 </style>
