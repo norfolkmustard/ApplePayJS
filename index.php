@@ -46,10 +46,12 @@ if (window.ApplePaySession) {
 
 document.getElementById("applePay").onclick = function(evt) {
 
-	 var runningAmount 	= 5.49;
+	 var runningAmount 	= 42;
 	 var runningPP		= 0; getShippingCosts('domestic_std', true);
 	 var runningTotal	= function() { return runningAmount + runningPP; }
 	 var shippingOption = "";
+	 
+	 var subTotalDescr	= "Test Goodies";
 	 
 	 function getShippingOptions(shippingCountry){
 	 logit('getShippingOptions: ' + shippingCountry );
@@ -92,8 +94,9 @@ document.getElementById("applePay").onclick = function(evt) {
 	 var paymentRequest = {
 	   currencyCode: '<?=PRODUCTION_CURRENCYCODE?>',
 	   countryCode: '<?=PRODUCTION_COUNTRYCODE?>',
-	   requiredShippingContactFields: ['postalAddress', 'email'],
-	   lineItems: [{label: 'Annual Membership', amount: runningAmount }, {label: 'P&P', amount: runningPP }],
+	   requiredShippingContactFields: ['postalAddress'],
+	   //requiredShippingContactFields: ['email'],
+	   lineItems: [{label: subTotalDescr, amount: runningAmount }, {label: 'P&P', amount: runningPP }],
 	   total: {
 		  label: '<?=PRODUCTION_DISPLAYNAME?>',
 		  amount: runningTotal()
@@ -137,7 +140,7 @@ document.getElementById("applePay").onclick = function(evt) {
 		var status = ApplePaySession.STATUS_SUCCESS;
 		var newShippingMethods = shippingOption;
 		var newTotal = { type: 'final', label: '<?=PRODUCTION_DISPLAYNAME?>', amount: runningTotal() };
-		var newLineItems =[{type: 'final',label: 'Annual Membership', amount: runningAmount }, {type: 'final',label: 'P&P', amount: runningPP }];
+		var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }, {type: 'final',label: 'P&P', amount: runningPP }];
 		
 		session.completeShippingContactSelection(status, newShippingMethods, newTotal, newLineItems );
 		
@@ -152,7 +155,7 @@ document.getElementById("applePay").onclick = function(evt) {
 		
 		var status = ApplePaySession.STATUS_SUCCESS;
 		var newTotal = { type: 'final', label: '<?=PRODUCTION_DISPLAYNAME?>', amount: runningTotal() };
-		var newLineItems =[{type: 'final',label: 'Annual Membership', amount: runningAmount }, {type: 'final',label: 'P&P', amount: runningPP }];
+		var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }, {type: 'final',label: 'P&P', amount: runningPP }];
 		
 		session.completeShippingMethodSelection(status, newTotal, newLineItems );
 		
@@ -164,7 +167,7 @@ document.getElementById("applePay").onclick = function(evt) {
 		logit(event);
 		
 		var newTotal = { type: 'final', label: '<?=PRODUCTION_DISPLAYNAME?>', amount: runningTotal() };
-		var newLineItems =[{type: 'final',label: 'Annual Membership', amount: runningAmount }, {type: 'final',label: 'P&P', amount: runningPP }];
+		var newLineItems =[{type: 'final',label: subTotalDescr, amount: runningAmount }, {type: 'final',label: 'P&P', amount: runningPP }];
 		
 		session.completePaymentMethodSelection( newTotal, newLineItems );
 		
@@ -183,8 +186,9 @@ document.getElementById("applePay").onclick = function(evt) {
 				status = ApplePaySession.STATUS_SUCCESS;
 			else
 				status = ApplePaySession.STATUS_FAILURE;
+			
+			logit( "result of sendPaymentToken() function =  " + success );
 			session.completePayment(status);
-			showConfirmation();
 		});
 	}
 
@@ -192,7 +196,11 @@ document.getElementById("applePay").onclick = function(evt) {
 		return new Promise(function(resolve, reject) {
 			logit('starting function sendPaymentToken()');
 			logit(paymentToken);
-			resolve;
+			
+			logit("this is where you would pass the payment token to your third-party payment provider to use the token to charge the card. Only if your provider tells you the payment was successful should you return a resolve(true) here. Otherwise reject;");
+			logit("defaulting to resolve(true) here, just to show what a successfully completed transaction flow looks like");
+			resolve(true);
+			//reject;
 		});
 	}
 	
