@@ -4,9 +4,11 @@ require_once ('/your/path/to/applepay_includes/apple_pay_conf.php');
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 #applePay {  
-	width: 80%;  
+	width: 300px;  
 	height: 150px;  
 	display: none;  
 	border: 1px solid black;  
@@ -24,6 +26,7 @@ require_once ('/your/path/to/applepay_includes/apple_pay_conf.php');
 <button type="button" id="applePay">ApplePay test button</button>
 <p style="display:none" id="got_notactive">ApplePay is possible on this browser, but not currently activated.</p>
 <p style="display:none" id="notgot">ApplePay not available on this browser</p>
+<p style="display:none" id="success">Payment completed, thanks. <a href="<?=$_SERVER["SCRIPT_URL"]?>">reset</a></p>
 </div>
 <script type="text/javascript">
 
@@ -186,10 +189,13 @@ document.getElementById("applePay").onclick = function(evt) {
 		var promise = sendPaymentToken(event.payment.token);
 		promise.then(function (success) {	
 			var status;
-			if (success)
+			if (success){
 				status = ApplePaySession.STATUS_SUCCESS;
-			else
+				document.getElementById("applePay").style.display = "none";
+				document.getElementById("success").style.display = "block";
+			} else {
 				status = ApplePaySession.STATUS_FAILURE;
+			}
 			
 			logit( "result of sendPaymentToken() function =  " + success );
 			session.completePayment(status);
