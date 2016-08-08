@@ -8,17 +8,19 @@ require_once ('/your/path/to/applepay_includes/apple_pay_conf.php');
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 #applePay {  
-	width: 300px;  
-	height: 150px;  
-	display: none;  
-	border: 1px solid black;  
-	box-sizing: border-box; 
+	width: 150px;  
+	height: 50px;  
+	display: none;   
+	border-radius: 5px;    
 	margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    background-color: lightblue;
-    
-} 
+	margin-right: auto;
+	margin-top: 20px;
+	background-image: -webkit-named-image(apple-pay-logo-white); 
+	background-position: 50% 50%;
+	background-color: black;
+	background-size: 90%; 
+	background-repeat: no-repeat;  
+}
 </style>
 </head>
 <body>
