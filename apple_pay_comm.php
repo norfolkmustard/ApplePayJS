@@ -19,7 +19,7 @@ if( "https" == parse_url($validation_url, PHP_URL_SCHEME) && substr( parse_url($
 
 	if(curl_exec($ch) === false)
 	{
-		echo 'Curl error: ' . curl_error($ch);
+		echo '{"curlError":"' . curl_error($ch) . '"}';
 	}
 
 	// close cURL resource, and free up system resources
