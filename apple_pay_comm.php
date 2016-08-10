@@ -2,7 +2,7 @@
 $validation_url = $_GET['u'];
 
 
-if( "https" == parse_url($validation_url, PHP_URL_SCHEME) && substr( parse_url($validation_url, PHP_URL_HOST), -9 )  == "apple.com" ){
+if( "https" == parse_url($validation_url, PHP_URL_SCHEME) && substr( parse_url($validation_url, PHP_URL_HOST), -10 )  == ".apple.com" ){
 
 	require_once ('/your/path/to/applepay_includes/apple_pay_conf.php');
 	
