@@ -6,6 +6,7 @@ require_once ('/your/path/to/applepay_includes/apple_pay_conf.php');
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ApplePay Test</title>
 <style>
 #applePay {  
 	width: 150px;  
@@ -27,8 +28,8 @@ require_once ('/your/path/to/applepay_includes/apple_pay_conf.php');
 <div>
 <button type="button" id="applePay"></button>
 <p style="display:none" id="got_notactive">ApplePay is possible on this browser, but not currently activated.</p>
-<p style="display:none" id="notgot">ApplePay not available on this browser</p>
-<p style="display:none" id="success">Payment completed, thanks. <a href="<?=$_SERVER["SCRIPT_URL"]?>">reset</a></p>
+<p style="display:none" id="notgot">ApplePay is not available on this browser</p>
+<p style="display:none" id="success">Test transaction completed, thanks. <a href="<?=$_SERVER["SCRIPT_URL"]?>">reset</a></p>
 </div>
 <script type="text/javascript">
 
@@ -47,7 +48,7 @@ if (window.ApplePaySession) {
 	  }
 	}); 
 } else {
-	logit('ApplePay not available on this browser');
+	logit('ApplePay is not available on this browser');
 	document.getElementById("notgot").style.display = "block";
 }
 
@@ -102,7 +103,8 @@ document.getElementById("applePay").onclick = function(evt) {
 	   currencyCode: '<?=PRODUCTION_CURRENCYCODE?>',
 	   countryCode: '<?=PRODUCTION_COUNTRYCODE?>',
 	   requiredShippingContactFields: ['postalAddress'],
-	   //requiredShippingContactFields: ['email'],
+	   //requiredShippingContactFields: ['postalAddress','email', 'name', 'phone'],
+	   //requiredBillingContactFields: ['postalAddress','email', 'name', 'phone'],
 	   lineItems: [{label: subTotalDescr, amount: runningAmount }, {label: 'P&P', amount: runningPP }],
 	   total: {
 		  label: '<?=PRODUCTION_DISPLAYNAME?>',
