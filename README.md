@@ -42,6 +42,10 @@ openssl pkcs12 -in ApplePayMerchantIdentity_and_privatekey.p12 -out ApplePay.key
 
 If at all possible, keep these two .pem files outside your root/public web folder. e.g. if your root web folder is /var/www/html/ then store these in /var/www/applepay_includes and include(); them in your php script.
 
-throughout index.php I've sprinkled loads of console.log(). Plug your iphone into your Mac, goto your applepay test page on safari on your iPhone. Goto Safari on your Mac and select your iPhone from the Develop menu in Safari - voila - you now see what your phone's safari browser is telling you via the javascript console.
+Throughout index.php I've sprinkled loads of console.log(). Plug your iphone into your Mac, goto your applepay test page on safari on your iPhone. Goto Safari on your Mac and select your iPhone from the Develop menu in Safari - voila - you now see what your phone's safari browser is telling you via the javascript console.
 
-remove these console.log() lines once you see how it all works and before you go-live with it.
+If you don't see your connected iPhone in the develop menu in safari on your Mac then it may not have been enabled. On the iPhone, got Settings > safari > advanced  > web inspector > enable
+
+Wake sure safari on the iphone is the active app, then, on the connected (with a cable) mac goto Safari > develop > {your iPhone}
+
+Remove the logit() lines in index.php (or set debug to false in apple_pay_conf.php) once you see how it all works and before you go-live with it.
