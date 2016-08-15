@@ -36,9 +36,9 @@ In that third section "Apple Pay Merchant Identity"...
 it's this xxx.p12 file which you then use openssl in terminal.app on your mac ......
  
 openssl pkcs12 -in ApplePayMerchantIdentity_and_privatekey.p12 -out ApplePay.crt.pem -clcerts -nokeys  
-openssl pkcs12 -in ApplePayMerchantIdentity_and_privatekey.p12 -out ApplePay.key.pem -nocerts -nodes 
+openssl pkcs12 -in ApplePayMerchantIdentity_and_privatekey.p12 -out ApplePay.key.pem -nocerts 
 
-...to create two .pem files. These are the files your webserver will use to authenticate its conversations with Apple, requesting a session etc for each ApplePay transaction your customers make. 
+...to create two .pem files. Remember the password you're asked to create when you extract ApplePay.key.pem above. You'll need to add this to apple_pay_conf.php. These are the two files your webserver will use to authenticate its conversations with Apple, requesting a session etc for each ApplePay transaction your customers make. 
 
 If at all possible, keep these two .pem files outside your root/public web folder. e.g. if your root web folder is /var/www/html/ then store these in /var/www/applepay_includes and include(); them in your php script.
 
