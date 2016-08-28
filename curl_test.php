@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-$validation_url = $_GET['u'] ? $_GET['u'] : "https://apple-pay-gateway-cert.apple.com/paymentservices/startSession";
+$validation_url = isset( $_GET['u'] ) ? $_GET['u'] : "https://apple-pay-gateway-cert.apple.com/paymentservices/startSession";
 
 
 if( "https" == parse_url($validation_url, PHP_URL_SCHEME) && substr( parse_url($validation_url, PHP_URL_HOST), -10 )  == ".apple.com" ){
