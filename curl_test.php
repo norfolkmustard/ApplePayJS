@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 $validation_url = $_GET['u'] ? $_GET['u'] : "https://apple-pay-gateway-cert.apple.com/paymentservices/startSession";
 
 
