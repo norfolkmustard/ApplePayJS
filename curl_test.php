@@ -2,6 +2,22 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
+if (!function_exists('json_last_error_msg')) {
+        function json_last_error_msg() {
+            static $ERRORS = array(
+                JSON_ERROR_NONE => 'No error',
+                JSON_ERROR_DEPTH => 'Maximum stack depth exceeded',
+                JSON_ERROR_STATE_MISMATCH => 'State mismatch (invalid or malformed JSON)',
+                JSON_ERROR_CTRL_CHAR => 'Control character error, possibly incorrectly encoded',
+                JSON_ERROR_SYNTAX => 'Syntax error',
+                JSON_ERROR_UTF8 => 'Malformed UTF-8 characters, possibly incorrectly encoded'
+            );
+
+            $error = json_last_error();
+            return isset($ERRORS[$error]) ? $ERRORS[$error] : 'Unknown error';
+        }
+    }
+
 $validation_url = isset( $_GET['u'] ) ? $_GET['u'] : "https://apple-pay-gateway-cert.apple.com/paymentservices/startSession";
 
 
@@ -26,21 +42,32 @@ if( "https" == parse_url($validation_url, PHP_URL_SCHEME) && substr( parse_url($
 	curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 	
-	curl_setopt($ch, CURLOPT_HEADER, true);
+	//debug options
+	//curl_setopt($ch, CURLOPT_HEADER, true);
 	curl_setopt($ch, CURLOPT_VERBOSE, true);
 	$verbose = fopen('php://temp', 'w+');
 	curl_setopt($ch, CURLOPT_STDERR, $verbose);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	
-	echo "<fieldset style='padding:1em;margin:1em'><legend> Headers & applePay server response</legend>";
+	$result = curl_exec($ch);
 
-	if(curl_exec($ch) === false)
+	if( $result === false)
 	{
-		echo "</fieldset>";
+
 		echo "<fieldset style='padding:1em;margin:1em'><legend> cURL Error </legend>";
-		$ch_error = curl_error($ch);
-		echo '{"curlError":' . json_encode( curl_errno($ch) . " - " . mb_convert_encoding( $ch_error, "UTF-8", mb_detect_encoding( $ch_error ) ) ) . '}';
+		echo curl_errno($ch) . " - " . curl_error($ch);
 		echo "</fieldset>";
+		
 	} else {
+		
+		echo "<fieldset style='padding:1em;margin:1em'><legend> applePay server response </legend>";
+		echo $result;
+		echo "</fieldset>";
+		
+		echo "<fieldset style='padding:1em;margin:1em'><legend> applePay server response - JSON decode test </legend>";
+		print_r( json_decode( $result, true ) );
+		echo "<hr> JSON decode last error :- ";
+		echo json_last_error_msg();
 		echo "</fieldset>";
 	}
 
