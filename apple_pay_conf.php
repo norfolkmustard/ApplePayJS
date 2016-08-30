@@ -6,7 +6,7 @@ define('PRODUCTION_CERTIFICATE_PATH', '/your/path/to/applepay_includes/ApplePay.
 // This is the password you were asked to create in terminal when you extracted ApplePay.key.pem
 define('PRODUCTION_CERTIFICATE_KEY_PASS', 'your password here'); 
 
-define('PRODUCTION_MERCHANTIDENTIFIER', openssl_x509_parse( file_get_contents( PRODUCTION_CERTIFICATE_PATH ))['subject']['UID'] ); //e.g. merchant.com.mydomain or merchant.com.mydomain.shop
+define('PRODUCTION_MERCHANTIDENTIFIER', openssl_x509_parse( file_get_contents( PRODUCTION_CERTIFICATE_PATH ))['subject']['UID'] ); //if you have a recent version of PHP, you can leave this line as-is. It will parse your certificate and retrieve the relevant line of text from it e.g. merchant.com.mydomain or merchant.com.mydomain.shop
 define('PRODUCTION_DOMAINNAME', $_SERVER["HTTP_HOST"]); //e.g. shop.mydomain.com or mydomain.com
 
 
