@@ -7,7 +7,7 @@ define('PRODUCTION_CERTIFICATE_PATH', '/your/path/to/applepay_includes/ApplePay.
 define('PRODUCTION_CERTIFICATE_KEY_PASS', 'your password here'); 
 
 define('PRODUCTION_MERCHANTIDENTIFIER', openssl_x509_parse( file_get_contents( PRODUCTION_CERTIFICATE_PATH ))['subject']['UID'] ); //if you have a recent version of PHP, you can leave this line as-is. http://uk.php.net/openssl_x509_parse will parse your certificate and retrieve the relevant line of text from it e.g. merchant.com.mydomain or merchant.com.mydomain.shop
-define('PRODUCTION_DOMAINNAME', $_SERVER["HTTP_HOST"]); //e.g. shop.mydomain.com or mydomain.com
+define('PRODUCTION_DOMAINNAME', $_SERVER["HTTP_HOST"]); //you can leave this line as-is too, it will take the domain from the server you run it on e.g. shop.mydomain.com or mydomain.com
 
 
 define('PRODUCTION_CURRENCYCODE', 'GBP');	//https://en.wikipedia.org/wiki/ISO_4217
