@@ -25,6 +25,8 @@ if( "https" == parse_url($validation_url, PHP_URL_SCHEME) && substr( parse_url($
 
 	require_once ('/your/path/to/apple_pay_conf.php');
 	
+	if( !defined( 'DEBUG' ) || DEBUG != 'true' ) { exit( 'this page intentionally left blank' ); }
+	
 	echo "<pre>";
 	
 	// create a new cURL resource
