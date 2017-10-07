@@ -120,9 +120,11 @@ document.getElementById("applePay").onclick = function(evt) {
 	session.onvalidatemerchant = function (event) {
 		logit(event);
 		var promise = performValidation(event.validationURL);
-		promise.then(function (merchantSession) {
+		promise.then(function (merchantSession) { /* valid session */
 			session.completeMerchantValidation(merchantSession);
-		}); 
+		}, function(merchantSession) { /* invalid session or adding products to cart in the performValidation fails */
+            session.abort();
+        }); 
 	}
 	
 
